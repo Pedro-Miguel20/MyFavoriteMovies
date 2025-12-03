@@ -2,29 +2,29 @@ import ReactDOM from 'react-dom/client'
 import { useState, useEffect } from 'react';
 
 function MovieCard() {    
-    const [movieData, setMovieData] = useState([]);
-    const [apiError, setApiError] = useState(null);
+    const [movieData, setMovieData] = useState([]); // State to hold movie data
+    const [apiError, setApiError] = useState(null); // State to hold API error
 
-    useEffect(() => {
+    useEffect(() => { // Fetch movie data from API
     fetch('https://jsonfakery.com/movies/rando')
       .then(res => res.json())
-      .then(data => setMovieData(data))
-      .catch(error => setApiError(error));
+      .then(data => setMovieData(data)) // Update state with fetched data
+      .catch(error => setApiError(error)); // Update state with error if fetch fails
   }, []);
 
-    return (
+    return ( // Render movie data or error message
         <div className='flex'>
             {movieData.length > 0 ?
                 (<div>
-                {movieData.map(movie => (<MovieInfo key={movie.id} movieObj={movie}/>))}
+                {movieData.map(movie => (<MovieInfo key={movie.id} movieObj={movie}/>))} {/* Passing props */}
                 </div>)
             : apiError && <div>Error: {apiError.message}</div>}
         </div>
     )
 }
 
-function MovieInfo({ movieObj }) {
-    return (   
+function MovieInfo({ movieObj }) { // Destructuring props
+    return (   // Render movie information
     <div className="profile" style={{border: '1px solid black', borderRadius: '10px', maxWidth: '400px'}}>
         <div>
             <div>
@@ -43,7 +43,7 @@ function MovieInfo({ movieObj }) {
     );
 }
 
-function App() {
+function App() { // Main App component
     return <MovieCard/>
 }
 
